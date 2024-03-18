@@ -8,4 +8,16 @@ class AppTextStyles {
     fontSize: 48,
     fontWeight: FontWeight.bold,
   );
+
+  static final TextStyle heading1 = GoogleFonts.archivo(
+    color: AppColors.blackColor2,
+    fontSize: 32.0, // Ensure the fontSize is a double for consistency
+    fontWeight: FontWeight.w900,
+  );
+
+  static final TextStyle bigButtonStyle = GoogleFonts.archivo(
+    color: Color.fromRGBO(135, 135, 135, 1), 
+    fontSize: 14.0,
+    fontWeight: FontWeight.w500,
+  );
 }
