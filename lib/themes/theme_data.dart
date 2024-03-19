@@ -9,6 +9,7 @@ ThemeData appTheme() {
       fontFamily: GoogleFonts.archivo().fontFamily,
       textTheme: TextTheme(
         labelLarge: AppTextStyles.styleSplashScreenText,
-        titleLarge: AppTextStyles.heading1,  
+        titleLarge: AppTextStyles.heading1,
+        titleMedium: AppTextStyles.heading2,
       ));
 }
