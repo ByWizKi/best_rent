@@ -11,6 +11,7 @@ class User {
 
   // Methods
 
+  // Constructors
   User(
       {DateTime? datePickUp,
       DateTime? dateDropOff,
@@ -20,21 +21,26 @@ class User {
     _datePickUp = datePickUp;
     _dateDropOff = dateDropOff;
     _age = age;
-    _cityName = cityName;
     _position = position;
+    _cityName = cityName;
   }
+
   // Getters
   DateTime get datePickUp => _datePickUp!;
   DateTime get dateDropOff => _dateDropOff!;
   int get age => _age!;
-  String get cityName => _cityName!;
+
   Position get position => _position!;
 
+  String get latitude => _position!.latitude.toString();
+
+  String get longitude => _position!.longitude.toString();
+
+  String get cityName => _cityName ?? '';
   // Setters
   set position(Position position) {
     _position = position;
   }
-
 
   set datePickUp(DateTime datePickUp) {
     _datePickUp = datePickUp;
@@ -49,7 +55,7 @@ class User {
     if (!checkAge()) _age = 21;
   }
 
-  set cityName(String cityName) {
+  set cityName(String? cityName) {
     _cityName = cityName;
   }
 

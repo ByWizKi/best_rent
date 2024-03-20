@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:best_rent/env/env.dart';
 import 'package:best_rent/services/service.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_geocoding_api/google_geocoding_api.dart';
 
@@ -76,14 +79,66 @@ Future<Position> _determinePositionFromCityName(String cityName) async {
   }
 }
 
+// Get cityName based on coordinates
+Future<String?> getCityNameFromCoordinates(
+    double latitude, double longitude) async {
+  try {
+    // Utiliser le package geocoding pour obtenir les informations de localisation
+    List<Placemark> placemarks =
+        await placemarkFromCoordinates(latitude, longitude);
+
+    // Retourner le nom de la ville. Assurez-vous que la liste n'est pas vide.
+    if (placemarks.isNotEmpty) {
+      // debugPrint(placemarks.first.locality ?? "Not found");
+      return placemarks.first.locality;
+    } else {
+      return "Location not available";
+    }
+  } catch (e) {
+    // En cas d'erreur, retourner un message d'erreur.
+    return "Failed to get city name: $e";
+  }
+}
+
+// Update user position based on coordinates
+Future<void> updatedPositionFromCoordinates(
+    double latitude, double longitude) async {
+  try {
+    // debugPrint('Updating position from coordinates: $latitude, $longitude');
+    if (latitude.isNaN || longitude.isNaN) return;
+    currentUser.position = Position(
+      longitude: longitude,
+      latitude: latitude,
+      timestamp: DateTime.now(),
+      accuracy: 0,
+      altitude: 0,
+      altitudeAccuracy: 0,
+      heading: 0,
+      headingAccuracy: 0,
+      speed: 0,
+      speedAccuracy: 0,
+    );
+    // debugPrint('Position updated from coordinates: ${currentUser.latitude}, ${currentUser.longitude}');
+    currentUser.cityName =
+        await getCityNameFromCoordinates(latitude, longitude);
+    // debugPrint('Position updated from coordinates: ${currentUser.cityName}');
+  } catch (e) {
+    log('Error in updatedPositionFromCoordinates: $e');
+    debugPrint('Error in updatedPositionFromCoordinates: $e');
+  }
+}
+
 // Update user position based on city name
 Future<void> updatePositionFromCityName(String cityName) async {
   try {
-    // debugPrint('Updating position from city name: $cityName');
+    debugPrint('Updating position from city name: $cityName');
     Position position = await _determinePositionFromCityName(cityName);
     currentUser.position = position;
+    // debugPrint('Position updated from city name: ${currentUser.latitude}, ${currentUser.longitude}');
+    currentUser.cityName = cityName;
     // debugPrint('Position updated from city name: $cityName');
   } catch (e) {
+    log('Error in updatePositionFromCityName: $e');
     // debugPrint('Error in updatePositionFromCityName: $e');
   }
 }
@@ -93,6 +148,12 @@ Future<void> updatePosition() async {
   try {
     // debugPrint('Updating user position...');
     currentUser.position = await _determinePosition();
+    currentUser.cityName = await getCityNameFromCoordinates(
+      double.parse(currentUser.latitude),
+      double.parse(currentUser.longitude),
+    );
+    // debugPrint('Position updated from current position: ${currentUser.latitude}, ${currentUser.longitude}');
+    // debugPrint('Position updated from current position: ${currentUser.cityName}');
     // debugPrint('User position updated.');
   } catch (e) {
     // debugPrint('Error in updatePosition: $e');

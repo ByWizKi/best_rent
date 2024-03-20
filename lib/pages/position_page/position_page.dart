@@ -14,6 +14,7 @@ class PositionPage extends StatefulWidget {
 }
 
 class _PositionPageState extends State<PositionPage> {
+  String cityName = 'SELECTIONNER UNE ZONE';
   @override
   void initState() {
     super.initState();

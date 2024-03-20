@@ -41,9 +41,16 @@ class AppTextStyles {
   );
 
   static final TextStyle suggestionStyle = GoogleFonts.archivo(
-    color: AppColors.blackColor,
-    fontSize: 17,
-  );
+      color: AppColors.blackColor,
+      fontSize: 17,
+      fontWeight: FontWeight.w700,
+      shadows: <Shadow>[
+        const Shadow(
+          color: Color.fromARGB(30, 0, 0, 0),
+          blurRadius: 2.0,
+          offset: Offset(0.0, 5.0),
+        )
+      ]);
 
   static final TextStyle buttonStyle = GoogleFonts.archivo(
     color: AppColors.whiteColor,
@@ -51,4 +58,13 @@ class AppTextStyles {
     fontWeight: FontWeight.w900,
     letterSpacing: 3.0,
   );
+
+  static final TextStyle buttonAlertDialog = GoogleFonts.archivo(
+    color: AppColors.blackColor,
+    fontSize: 25,
+    fontWeight: FontWeight.w700,
+  );
+
+  static final TextStyle titleAlertDialog = GoogleFonts.archivo(
+      color: AppColors.blackColor2, fontSize: 27, fontWeight: FontWeight.w700);
 }

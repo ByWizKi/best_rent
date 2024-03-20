@@ -38,7 +38,7 @@ Widget buttonTextField(context) {
         overlayColor: MaterialStateProperty.all<Color>(AppColors.whiteColor),
       ),
       child: Text(
-        'SELECTIONNER UNE ZONE',
+        'SÉLECTIONNER UNE ZONE',
         style: AppTextStyles.bigButtonStyle,
       ),
     ),
