@@ -67,4 +67,16 @@ class AppTextStyles {
 
   static final TextStyle titleAlertDialog = GoogleFonts.archivo(
       color: AppColors.blackColor2, fontSize: 27, fontWeight: FontWeight.w700);
+
+  static final TextStyle labelDaysTextStyle = GoogleFonts.archivo(
+    color: AppColors.blackColor2,
+    fontSize: 13,
+    fontWeight: FontWeight.w500,
+  );
+
+  static final TextStyle daysTextStyle = GoogleFonts.archivo(
+    color: AppColors.blackColor2,
+    fontSize: 13,
+    fontWeight: FontWeight.w400,
+  );
 }
