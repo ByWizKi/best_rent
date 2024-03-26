@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 Widget textSuggestionSection(context) {
   return Container(
-    margin: const EdgeInsets.only(bottom: 20.0),
+    margin: const EdgeInsets.only(top: 20.0, bottom: 20.0),
     decoration: const BoxDecoration(
       border: Border(
           bottom: BorderSide(

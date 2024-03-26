@@ -4,8 +4,8 @@ class User {
   // Attributes
   /* DateTime Format = YYYY-MM-DD HH:MM:SS */
   Position? _position;
-  DateTime? _datePickUp;
-  DateTime? _dateDropOff;
+  DateTime? _datePickUp = DateTime.now();
+  DateTime? _dateDropOff = DateTime.now().add(const Duration(days: 1));
   int? _age = 21;
   String? _cityName;
 
@@ -27,6 +27,11 @@ class User {
 
   // Getters
   DateTime get datePickUp => _datePickUp!;
+
+  String get datePickUpString => _datePickUp!.toIso8601String();
+
+  String get dateDropOffString => _dateDropOff!.toIso8601String();
+
   DateTime get dateDropOff => _dateDropOff!;
   int get age => _age!;
 

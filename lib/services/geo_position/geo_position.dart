@@ -55,9 +55,8 @@ Future<Position> _determinePositionFromCityName(String cityName) async {
       cityName,
       language: 'fr',
     );
-
-    if (response.status == 'OK' && response.results.isNotEmpty) {
-      debugPrint('Position found for city name: $cityName');
+    if (response.status.name == 'ok' && response.results.isNotEmpty) {
+      // debugPrint('Position found for city name: $cityName');
       return Position(
           longitude: response.results.first.geometry!.location.lng,
           latitude: response.results.first.geometry!.location.lat,
@@ -70,11 +69,11 @@ Future<Position> _determinePositionFromCityName(String cityName) async {
           speed: 0,
           speedAccuracy: 0);
     } else {
-      debugPrint('No results found for city name: $cityName');
+      // debugPrint('No results found for city name: $cityName');
       return Future.error('No results found for city name: $cityName');
     }
   } catch (e) {
-    debugPrint('Error in getPositionFromCityName: $e');
+    // debugPrint('Error in getPositionFromCityName: $e');
     return Future.error('Error in getPositionFromCityName: $e');
   }
 }
@@ -131,7 +130,7 @@ Future<void> updatedPositionFromCoordinates(
 // Update user position based on city name
 Future<void> updatePositionFromCityName(String cityName) async {
   try {
-    debugPrint('Updating position from city name: $cityName');
+    // debugPrint('Updating position from city name: $cityName');
     Position position = await _determinePositionFromCityName(cityName);
     currentUser.position = position;
     // debugPrint('Position updated from city name: ${currentUser.latitude}, ${currentUser.longitude}');

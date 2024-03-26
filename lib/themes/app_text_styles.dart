@@ -68,15 +68,40 @@ class AppTextStyles {
   static final TextStyle titleAlertDialog = GoogleFonts.archivo(
       color: AppColors.blackColor2, fontSize: 27, fontWeight: FontWeight.w700);
 
+  static final TextStyle controlsTextStyle = GoogleFonts.archivo(
+    color: AppColors.blackColor,
+    fontWeight: FontWeight.w700,
+    fontSize: 20,
+  );
+
   static final TextStyle labelDaysTextStyle = GoogleFonts.archivo(
-    color: AppColors.blackColor2,
-    fontSize: 13,
-    fontWeight: FontWeight.w500,
+    color: AppColors.blackColor,
+    fontSize: 17,
+    fontWeight: FontWeight.w600,
   );
 
   static final TextStyle daysTextStyle = GoogleFonts.archivo(
     color: AppColors.blackColor2,
-    fontSize: 13,
-    fontWeight: FontWeight.w400,
+    fontSize: 15,
+    fontWeight: FontWeight.w600,
+  );
+
+  static final selectedDaysTextStyle = GoogleFonts.archivo(
+    color: AppColors.blackColor,
+    fontSize: 15,
+    fontWeight: FontWeight.w600,
+  );
+
+  static final TextStyle timePickerTextStyle = GoogleFonts.archivo(
+    color: AppColors.blackColor,
+    fontSize: 18,
+    fontWeight: FontWeight.w600,
+  );
+
+  static final TextStyle suggestionDateTimePickerTextStyle =
+      GoogleFonts.archivo(
+    color: AppColors.blackColor,
+    fontSize: 16,
+    fontWeight: FontWeight.w500,
   );
 }

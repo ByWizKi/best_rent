@@ -18,39 +18,44 @@ class _DatesPageState extends State<DatesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        padding: const EdgeInsets.only(top: 70.0, left: 20.0, right: 20.0),
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        decoration: const BoxDecoration(gradient: AppColors.gradient),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            textTopSection(context),
-            DatePicker(context),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                timePicker(context, 'Debut'),
-                const Spacer(),
-                timePicker(context, 'Fin'),
-              ],
-            ),
-            textSuggestionSection(context),
-            Row(
-              children: [
-                suggestionDateSection(context, '1 Jour'),
-                const Spacer(),
-                suggestionDateSection(context, '2 Jours'),
-                const Spacer(),
-                suggestionDateSection(context, '1 Semaine'),
-              ],
-            ),
-            Center(
-              child: buttonSubmitDate(context),
-            )
-          ],
+      body: SingleChildScrollView(
+        child: Container(
+          padding: const EdgeInsets.only(top: 70.0, left: 20.0, right: 20.0),
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          decoration: const BoxDecoration(gradient: AppColors.gradient),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              textTopSection(context),
+              datePicker(context),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TimePicker(text: 'Debut'),
+                  const Spacer(),
+                  TimePicker(text: 'Fin'),
+                ],
+              ),
+              textSuggestionSection(context),
+              Row(
+                children: [
+                  suggestionDateSection(context, '1 Jour'),
+                  const Spacer(),
+                  suggestionDateSection(context, '2 Jours'),
+                  const Spacer(),
+                  suggestionDateSection(context, '1 Semaine'),
+                ],
+              ),
+              const SizedBox(
+                height: 40,
+              ),
+              Center(
+                child: buttonSubmitDate(context),
+              )
+            ],
+          ),
         ),
       ),
     );

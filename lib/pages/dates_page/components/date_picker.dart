@@ -1,56 +1,64 @@
+import 'dart:developer';
+
+import 'package:best_rent/services/date_picker/date_picker.dart';
 import 'package:best_rent/themes/app_colors.dart';
 import 'package:best_rent/themes/app_text_styles.dart';
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:flutter/material.dart';
 
-Widget DatePicker(context) {
+Widget datePicker(context) {
   return Container(
-      padding: const EdgeInsets.all(10),
-      decoration: const BoxDecoration(
-          color: AppColors.whiteColor,
-          borderRadius: BorderRadius.all(Radius.circular(20.0)),
-          boxShadow: [
-            BoxShadow(
-              color: AppColors.blackColor2,
-              spreadRadius: 1,
-              blurRadius: 1,
-              offset: Offset(0, 1),
-            )
-          ]),
-      child: CalendarDatePicker2(
-        config: CalendarDatePicker2Config(
-          calendarType: CalendarDatePicker2Type.range,
-          firstDate: DateTime.now(),
-          lastDate: DateTime.now().add(const Duration(days: 365)),
-          calendarViewMode: DatePickerMode.day,
-          lastMonthIcon: lastMonthIcon,
-          nextMonthIcon: nextMonthIcon,
-          weekdayLabels: labelDays(),
-          weekdayLabelTextStyle: AppTextStyles.labelDaysTextStyle,
-          selectedDayHighlightColor: AppColors.primaryColor,
-          selectedRangeHighlightColor: AppColors.secondaryColorBis,
-          dayTextStyle: AppTextStyles.daysTextStyle,
-          rangeBidirectional: true,
-          dayBorderRadius: BorderRadius.circular(10),
-        ),
-        value: [
-          DateTime.now(),
-          DateTime.now().add(const Duration(days: 1)),
-        ],
-        onValueChanged: (value) {},
-      ));
-}
+    margin: const EdgeInsets.only(top: 20.0, bottom: 20.0),
+    padding: const EdgeInsets.all(10),
+    decoration: const BoxDecoration(
+        color: AppColors.whiteColor,
+        borderRadius: BorderRadius.all(Radius.circular(20.0)),
+        boxShadow: [
+          BoxShadow(
+            color: Color.fromRGBO(62, 62, 62, 0.527),
+            spreadRadius: 3,
+            blurRadius: 10,
+            offset: Offset(0, 3),
+          )
+        ]),
+    child: CalendarDatePicker2(
+      config: CalendarDatePicker2Config(
+        calendarType: CalendarDatePicker2Type.range,
+        firstDate: DateTime.now(),
+        calendarViewMode: DatePickerMode.day,
+        lastMonthIcon: lastMonthIcon,
+        nextMonthIcon: nextMonthIcon,
+        centerAlignModePicker: true,
+        customModePickerIcon: const SizedBox(),
+        controlsTextStyle: AppTextStyles.controlsTextStyle,
+        weekdayLabelTextStyle: AppTextStyles.labelDaysTextStyle,
+        dayTextStyle: AppTextStyles.daysTextStyle,
+        selectedRangeDayTextStyle: AppTextStyles.selectedDaysTextStyle,
+        selectedDayTextStyle: AppTextStyles.selectedDaysTextStyle,
+        rangeBidirectional: true,
+        selectedDayHighlightColor: AppColors.primaryColor,
+        selectedRangeHighlightColor: AppColors.secondaryColorBis,
+        dayBorderRadius: BorderRadius.circular(10),
+      ),
+      value: [
+        DateTime.now(),
+        DateTime.now().add(const Duration(days: 1)),
+      ],
+      onValueChanged: (value) async {
+        if (value.length == 2) {
+          try {
+            debugPrint("Upadating date : $value");
+            await updateDate(value);
+            debugPrint("Date updated successfully : $value");
 
-List<String>? labelDays() {
-  return [
-    'Lun',
-    'Mar',
-    'Mer',
-    'Jeu',
-    'Ven',
-    'Sam',
-    'Dim',
-  ];
+            log('Date updated successfully : $value');
+          } catch (error) {
+            log(error.toString());
+          }
+        }
+      },
+    ),
+  );
 }
 
 BoxDecoration decorationDatePicker() {

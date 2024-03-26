@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:best_rent/services/geo_position/geo_position.dart';
+// import 'package:best_rent/services/service.dart';
 import 'package:best_rent/themes/app_colors.dart';
 import 'package:best_rent/themes/app_text_styles.dart';
 import 'package:flutter/material.dart';
@@ -43,6 +44,7 @@ Widget citySuggestionSection(context, city) {
           await updatePositionFromCityName(city);
           // debugPrint('Position updated successfully by city name : $city');
           // debugPrint(currentUser.position.toString());
+          log('Position updated successfully by city name : $city');
         } catch (error) {
           log('Position not updated by city name : $city \n $error');
           // debugPrint('debugPrint : Position not updated by city name : $city');
