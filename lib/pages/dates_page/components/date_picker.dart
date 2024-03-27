@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:best_rent/services/date_picker/date_picker.dart';
 import 'package:best_rent/themes/app_colors.dart';
 import 'package:best_rent/themes/app_text_styles.dart';
@@ -46,15 +44,7 @@ Widget datePicker(context) {
       ],
       onValueChanged: (value) async {
         if (value.length == 2) {
-          try {
-            debugPrint("Upadating date : $value");
-            await updateDate(value);
-            debugPrint("Date updated successfully : $value");
-
-            log('Date updated successfully : $value');
-          } catch (error) {
-            log(error.toString());
-          }
+          await updateDate(value);
         }
       },
     ),

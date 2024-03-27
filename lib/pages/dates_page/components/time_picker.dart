@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:best_rent/services/date_picker/date_picker.dart';
 import 'package:best_rent/themes/app_colors.dart';
 import 'package:best_rent/themes/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
+import 'package:intl/intl.dart';
 
 class TimePicker extends StatefulWidget {
   final String text;
@@ -12,7 +15,7 @@ class TimePicker extends StatefulWidget {
 }
 
 class _TimePickerState extends State<TimePicker> {
-  String time = '09:00';
+  String timeText = '09:00';
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
@@ -31,18 +34,39 @@ class _TimePickerState extends State<TimePicker> {
         onPressed: () {
           DatePicker.showTimePicker(
             context,
+            locale: LocaleType.fr,
             showTitleActions: true,
             showSecondsColumn: false,
+            currentTime: DateTime.now(),
             onConfirm: (time) async {
-              setState(
-                () {
-                  this.time = '${time.hour}:${time.minute}';
-                },
-              );
               if (widget.text == 'Debut') {
-                await updateTime(time, true);
+                await updateTime(time, true)
+                    .then((value) => {
+                          setState(() {
+                            timeText = DateFormat('HH:mm').format(time);
+                          })
+                        })
+                    .catchError((value) => {
+                          setState(() {
+                            timeText =
+                                DateFormat('HH:mm').format(DateTime.now());
+                          }),
+                          log(value)
+                        });
               } else {
-                await updateTime(time, false);
+                await updateTime(time, false)
+                    .then((value) => {
+                          setState(() {
+                            timeText = DateFormat('HH:mm').format(time);
+                          })
+                        })
+                    .catchError((error) => {
+                          setState(() {
+                            timeText =
+                                DateFormat('HH:mm').format(DateTime.now());
+                          }),
+                          log(error.toString())
+                        });
               }
             },
           );
@@ -53,7 +77,7 @@ class _TimePickerState extends State<TimePicker> {
             style: AppTextStyles.timePickerTextStyle,
           ),
           Text(
-            time,
+            timeText,
             style: AppTextStyles.timePickerTextStyle,
           ),
         ]));

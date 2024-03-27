@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 Future<void> updateDate(List<DateTime?> dates) async {
   try {
+    debugPrint('Updating date by datePicker ...');
     if (dates.length == 2) {
       if (dates[0] == null || dates[1] == null) return;
       if (dates[0]!.isAfter(dates[1]!)) return;
@@ -12,25 +13,73 @@ Future<void> updateDate(List<DateTime?> dates) async {
           .isBefore(DateTime.now().subtract(const Duration(days: 1)))) {
         return;
       }
+      dates[0] = dates[0]!.add(Duration(hours: DateTime.now().hour));
+      dates[1] = dates[1]!.add(Duration(hours: DateTime.now().hour));
+      dates[0] = dates[0]!.add(Duration(minutes: DateTime.now().minute));
+      dates[1] = dates[1]!.add(Duration(minutes: DateTime.now().minute));
       currentUser.datePickUp = dates[0]!;
       currentUser.dateDropOff = dates[1]!;
-      log(currentUser.datePickUpString);
-      log(currentUser.dateDropOffString);
+
+      debugPrint(
+        'Date updated to: ${currentUser.datePickUpString} - ${currentUser.dateDropOffString}',
+      );
     } else {
+      log('Error in updateDate dates are not valid');
       return Future.error('Error in updateDate dates are not valid');
     }
   } catch (e) {
     // debugPrint('Error in updateDate: $e');
+    log('Error in updateDate: $e');
     return Future.error('Error in updateDate: $e');
   }
 }
 
+Future<void> updateDateByDays(int days) async {
+  try {
+    debugPrint('Updating date by suggestion ...');
+    if (days <= 0 || days > 7) {
+      return Future.error('Error in updateDateByDays');
+    } else {
+      currentUser.datePickUp = DateTime(
+        DateTime.now().year,
+        DateTime.now().month,
+        DateTime.now().day,
+        DateTime.now().hour,
+        DateTime.now().add(const Duration(minutes: 5)).minute,
+        DateTime.now().second,
+      );
+      currentUser.dateDropOff = DateTime.now().add(Duration(days: days)).add(
+            const Duration(minutes: 5),
+          );
+    }
+    debugPrint(
+      'Date updated to: ${currentUser.datePickUpString} - ${currentUser.dateDropOffString} by suggestion',
+    );
+  } catch (e) {
+    // debugPrint('Error in updateDateByDays: $e');
+    log('Error in updateDateByDays: $e');
+    return Future.error('Error in updateDateByDays: $e');
+  }
+}
+
 Future<void> updateTime(DateTime time, isPickUp) async {
-  debugPrint(currentUser.datePickUp.toString());
   try {
     if (isPickUp) {
-      debugPrint('PickUp time updating to: ${time.hour}:${time.minute}');
-
+      debugPrint('PickUp time updating by timePicker ...');
+      if (currentUser.datePickUp.hour == time.hour &&
+          currentUser.datePickUp.minute >= time.minute &&
+          currentUser.datePickUp.day == time.day &&
+          currentUser.datePickUp.month == time.month &&
+          currentUser.datePickUp.year == time.year) {
+        return Future.error(
+            'Error in updateTime minute is less than timePicker');
+      }
+      if (currentUser.datePickUp.hour > time.hour &&
+          currentUser.datePickUp.day == time.day &&
+          currentUser.datePickUp.month == time.month &&
+          currentUser.datePickUp.year == time.year) {
+        return Future.error('Error in updateTime hour is less than timePicker');
+      }
       currentUser.datePickUp = DateTime(
         currentUser.datePickUp.year,
         currentUser.datePickUp.month,
@@ -39,8 +88,7 @@ Future<void> updateTime(DateTime time, isPickUp) async {
         time.minute,
         currentUser.datePickUp.second,
       );
-      debugPrint(
-          'PickUp time updated to: ${currentUser.datePickUp.toString()}');
+      debugPrint('PickUp time updated to: ${currentUser.datePickUpString}');
     } else {
       debugPrint('DropOff time updating to: ${time.hour}:${time.minute}');
       currentUser.dateDropOff = DateTime(
@@ -51,11 +99,10 @@ Future<void> updateTime(DateTime time, isPickUp) async {
         time.minute,
         currentUser.dateDropOff.second,
       );
-      debugPrint(
-          'DropOff time updated to: ${currentUser.dateDropOff.toString()}');
+      debugPrint('DropOff time updated to: ${currentUser.dateDropOffString}');
     }
   } catch (e) {
-    // debugPrint('Error in updateTime: $e');
+    debugPrint('Error in updateTime: $e');
     return Future.error('Error in updateTime: $e');
   }
 }
