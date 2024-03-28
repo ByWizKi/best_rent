@@ -15,7 +15,7 @@ class TimePicker extends StatefulWidget {
 }
 
 class _TimePickerState extends State<TimePicker> {
-  String timeText = '09:00';
+  String timeText = DateFormat('HH:mm').format(DateTime.now());
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(

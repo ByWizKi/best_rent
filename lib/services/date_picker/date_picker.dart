@@ -13,10 +13,14 @@ Future<void> updateDate(List<DateTime?> dates) async {
           .isBefore(DateTime.now().subtract(const Duration(days: 1)))) {
         return;
       }
+
       dates[0] = dates[0]!.add(Duration(hours: DateTime.now().hour));
       dates[1] = dates[1]!.add(Duration(hours: DateTime.now().hour));
       dates[0] = dates[0]!.add(Duration(minutes: DateTime.now().minute));
       dates[1] = dates[1]!.add(Duration(minutes: DateTime.now().minute));
+      if (dates[0] == dates[1]) {
+        dates[1] = dates[1]!.add(const Duration(hours: 1));
+      }
       currentUser.datePickUp = dates[0]!;
       currentUser.dateDropOff = dates[1]!;
 
@@ -91,6 +95,20 @@ Future<void> updateTime(DateTime time, isPickUp) async {
       debugPrint('PickUp time updated to: ${currentUser.datePickUpString}');
     } else {
       debugPrint('DropOff time updating to: ${time.hour}:${time.minute}');
+      if (currentUser.dateDropOff.hour == time.hour &&
+          currentUser.dateDropOff.minute >= time.minute &&
+          currentUser.dateDropOff.day == time.day &&
+          currentUser.dateDropOff.month == time.month &&
+          currentUser.dateDropOff.year == time.year) {
+        return Future.error(
+            'Error in updateTime minute is less than timePicker');
+      }
+      if (currentUser.dateDropOff.hour > time.hour &&
+          currentUser.dateDropOff.day == time.day &&
+          currentUser.dateDropOff.month == time.month &&
+          currentUser.dateDropOff.year == time.year) {
+        return Future.error('Error in updateTime hour is less than timePicker');
+      }
       currentUser.dateDropOff = DateTime(
         currentUser.dateDropOff.year,
         currentUser.dateDropOff.month,

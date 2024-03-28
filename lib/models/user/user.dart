@@ -77,20 +77,14 @@ class User {
   }
 
   bool checkDate() {
-    try {
-      if (_datePickUp == null || _dateDropOff == null) return false;
-      if (_datePickUp!.isAfter(_dateDropOff!)) return false;
-      // if (_datePickUp!
-      //     .isBefore(DateTime.now().subtract(const Duration(minutes: 1)))) {
-      //   return false;
-      // }
-      if (!_datePickUp!.isUtc) return false;
-      if (!_dateDropOff!.isUtc) return false;
-    } catch (e) {
+    if (_datePickUp == null) return false;
+    if (_dateDropOff == null) return false;
+    if (_datePickUp!.isAfter(_dateDropOff!)) return false;
+    if (_datePickUp!.isBefore(DateTime.now().subtract(const Duration(days: 1))))
       return false;
-    }
+    if (_dateDropOff!
+        .isBefore(DateTime.now().subtract(const Duration(days: 1))))
+      return false;
     return true;
   }
-
-  // Methods
 }

@@ -11,7 +11,7 @@ Widget buttonSubmitDate(context) {
     height: 55,
     child: ElevatedButton(
       onPressed: () {
-        if (currentUser.datePickUp.isAfter(currentUser.dateDropOff)) {
+        if(!currentUser.checkDate()){
           showDialog(
               context: context,
               builder: (context) => alertDialogDatesError(context));

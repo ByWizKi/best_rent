@@ -29,12 +29,12 @@ class _DatesPageState extends State<DatesPage> {
             children: [
               textTopSection(context),
               datePicker(context),
-              Row(
+              const Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   TimePicker(text: 'Debut'),
-                  const Spacer(),
+                  Spacer(),
                   TimePicker(text: 'Fin'),
                 ],
               ),
