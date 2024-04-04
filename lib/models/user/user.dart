@@ -1,4 +1,5 @@
 import 'package:geolocator/geolocator.dart';
+import 'package:intl/intl.dart';
 
 class User {
   // Attributes
@@ -28,9 +29,11 @@ class User {
   // Getters
   DateTime get datePickUp => _datePickUp!;
 
-  String get datePickUpString => _datePickUp!.toString();
+  String get datePickUpString =>
+      DateFormat('yyyy-MM-dd HH:mm:ss').format(_datePickUp!);
 
-  String get dateDropOffString => _dateDropOff!.toString();
+  String get dateDropOffString =>
+      DateFormat('yyyy-MM-dd HH:mm:ss').format(_dateDropOff!);
 
   DateTime get dateDropOff => _dateDropOff!;
   int get age => _age!;
@@ -80,11 +83,14 @@ class User {
     if (_datePickUp == null) return false;
     if (_dateDropOff == null) return false;
     if (_datePickUp!.isAfter(_dateDropOff!)) return false;
-    if (_datePickUp!.isBefore(DateTime.now().subtract(const Duration(days: 1))))
+    if (_datePickUp!
+        .isBefore(DateTime.now().subtract(const Duration(days: 1)))) {
       return false;
+    }
     if (_dateDropOff!
-        .isBefore(DateTime.now().subtract(const Duration(days: 1))))
+        .isBefore(DateTime.now().subtract(const Duration(days: 1)))) {
       return false;
+    }
     return true;
   }
 }
