@@ -47,14 +47,13 @@ Future<void> updateDateByDays(int days) async {
       currentUser.datePickUp = DateTime(
         DateTime.now().year,
         DateTime.now().month,
-        DateTime.now().day,
+        DateTime.now().add(const Duration(days: 1)).day,
         DateTime.now().hour,
-        DateTime.now().add(const Duration(minutes: 5)).minute,
+        DateTime.now().minute,
         DateTime.now().second,
       );
-      currentUser.dateDropOff = DateTime.now().add(Duration(days: days)).add(
-            const Duration(minutes: 5),
-          );
+      currentUser.dateDropOff =
+          currentUser.datePickUp.add(Duration(days: days));
     }
     debugPrint(
       'Date updated to: ${currentUser.datePickUpString} - ${currentUser.dateDropOffString} by suggestion',

@@ -104,4 +104,57 @@ class AppTextStyles {
     fontSize: 16,
     fontWeight: FontWeight.w500,
   );
+
+  static final TextStyle topFeedSectionTextStyle = GoogleFonts.archivo(
+    color: AppColors.whiteColor,
+    fontSize: 20,
+    fontWeight: FontWeight.w700,
+  );
+
+  static final TextStyle ratingTextStyle = GoogleFonts.archivoBlack(
+    color: AppColors.blackColor,
+    fontSize: 15,
+  );
+
+  static final TextStyle nameModelTextStyle = GoogleFonts.archivoBlack(
+    color: AppColors.blackColor,
+    fontSize: 20,
+  );
+
+  static final TextStyle priceTextStyle = GoogleFonts.archivoBlack(
+    color: AppColors.blackColor2,
+    fontSize: 15,
+  );
+
+  static final TextStyle titleDescriptionTextStyle = GoogleFonts.archivoBlack(
+    color: AppColors.blackColor,
+    fontSize: 33,
+  );
+
+  static final TextStyle descriptionTextStyle = GoogleFonts.archivoBlack(
+    color: AppColors.blackColor,
+    fontSize: 17,
+  );
+
+  static final TextStyle supplierNameTextStyle = GoogleFonts.archivoBlack(
+    color: AppColors.blackColor,
+    fontSize: 24,
+  );
+
+  static final TextStyle supplierAdressTextStyle = GoogleFonts.archivoBlack(
+    color: AppColors.blackColor2,
+    fontSize: 12,
+  );
+
+  static final TextStyle priceDescriptionTextStyle = GoogleFonts.archivo(
+    color: AppColors.blackColor,
+    fontWeight: FontWeight.w800,
+    fontSize: 30,
+  );
+
+  static final TextStyle buttonDescriptionTextStyle2 = GoogleFonts.archivo(
+    color: AppColors.blackColor,
+    fontSize: 12,
+    fontWeight: FontWeight.w800,
+  );
 }

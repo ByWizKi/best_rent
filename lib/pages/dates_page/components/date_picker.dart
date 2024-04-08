@@ -22,7 +22,7 @@ Widget datePicker(context) {
     child: CalendarDatePicker2(
       config: CalendarDatePicker2Config(
         calendarType: CalendarDatePicker2Type.range,
-        firstDate: DateTime.now(),
+        firstDate: DateTime.now().add(const Duration(days: 1)),
         calendarViewMode: DatePickerMode.day,
         lastMonthIcon: lastMonthIcon,
         nextMonthIcon: nextMonthIcon,
@@ -39,12 +39,11 @@ Widget datePicker(context) {
         dayBorderRadius: BorderRadius.circular(10),
       ),
       value: [
-        DateTime.now(),
         DateTime.now().add(const Duration(days: 1)),
+        DateTime.now().add(const Duration(days: 2)),
       ],
       onValueChanged: (value) async {
         if (value.length == 2) {
-          
           await updateDate(value);
         }
       },
