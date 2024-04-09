@@ -4,7 +4,11 @@ import 'package:best_rent/screens/splash_screen/components/text_component.dart';
 import 'package:best_rent/themes/app_colors.dart';
 import 'package:flutter/material.dart';
 
+/// The SplashScreen is the first screen the user sees when they open the app.
+/// It displays a logo and a text which fade in and scale in respectively.
+/// When the animations are done, it navigates to the [PositionPage].
 class SplashScreen extends StatefulWidget {
+  /// The constructor for the SplashScreen.
   const SplashScreen({super.key});
 
   @override
@@ -41,12 +45,12 @@ class _SplashScreenState extends State<SplashScreen>
 
     _animationController?.forward();
 
-    // Ajouter un écouteur sur le statut de l'animation
+    // Add a listener to the animation status
     _animationController?.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
-        // Naviguer vers une nouvelle page ici
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => PositionPage()));
+        // Navigate to a new page here
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => const PositionPage()));
       }
     });
   }
@@ -67,7 +71,6 @@ class _SplashScreenState extends State<SplashScreen>
           gradient: AppColors.gradient,
         ),
         child: Column(
-          
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [

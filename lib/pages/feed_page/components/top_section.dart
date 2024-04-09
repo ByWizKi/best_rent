@@ -2,109 +2,89 @@ import 'package:best_rent/services/service.dart';
 import 'package:best_rent/themes/app_colors.dart';
 import 'package:best_rent/themes/app_text_styles.dart';
 import 'package:flutter/material.dart';
-import 'package:list_picker/list_picker.dart';
+import 'package:select_dialog/select_dialog.dart';
 
-Widget topSection(context) {
+/// A widget that represents the top section of the feed page.
+///
+/// It contains a [Container] with a black color, rounded corners and a
+/// box shadow. Inside the container, it displays a [shortSection] widget.
+///
+/// The [topSection] widget takes two parameters:
+///  - [context]: the build context of the parent widget.
+///  - [onTap]: a callback function that is called when the widget is tapped.
+Widget topSection(BuildContext context, Function()? onTap) {
   return Container(
-    padding: const EdgeInsets.all(10.0),
-    width: MediaQuery.of(context).size.width,
-    height: MediaQuery.of(context).size.height / 14.2,
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(10.0),
-      color: AppColors.whiteColor,
-    ),
-    child: Row(
-      children: [
-        shortSection(context),
-        const Spacer(),
-        modelsSection(context),
-      ],
-    ),
-  );
-}
+    // Margin and padding for the container.
+    margin: const EdgeInsets.symmetric(horizontal: 20.0),
+    padding: const EdgeInsets.only(left: 10),
 
-Widget shortSection(context) {
-  return Container(
-    padding: const EdgeInsets.only(top: 7.0, bottom: 9.0),
-    width: MediaQuery.of(context).size.width / 2.80,
-    height: MediaQuery.of(context).size.height / 21.3,
+    // Decoration of the container.
     decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(10.0),
-      color: AppColors.blackColor2,
+      color: AppColors.blackColor2, // Color of the container.
+      borderRadius:
+          BorderRadius.circular(10.0), // Border radius of the container.
       boxShadow: [
         BoxShadow(
-          color: AppColors.blackColor.withOpacity(0.3), // Color of the shadow
-          spreadRadius: 1, // Spread radius
-          blurRadius: 2, // Blur radius
-          offset: const Offset(0, 3), // changes position of shadow
+          color:
+              AppColors.blackColor.withOpacity(0.3), // Color of the box shadow.
+          spreadRadius: 2, // Spread radius of the box shadow.
+          blurRadius: 3, // Blur radius of the box shadow.
+          offset: const Offset(0, 3), // Offset of the box shadow.
         )
       ],
     ),
-    child: GestureDetector(
-      onTap: () async {
-        String? shortChoice = await showPickerDialog(
-          context: context,
-          label: "Trier par :",
-          items: const [
-            "Prix croissant",
-            "Prix décroissant",
-            "Mieux notés",
-          ],
-        );
-        switch (shortChoice) {
-          case "Prix croissant":
-            sortByPriceLowToHigh(currentCarList);
-            break;
-          case "Prix décroissant":
-            sortByPriceHighToLow(currentCarList);
-            break;
-          case "Mieux notés":
-            sortByRating(currentCarList);
-            break;
-          default:
-            break;
-        }
-      },
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Icon(Icons.swap_vert, color: AppColors.primaryColor),
-          const SizedBox(width: 15.0),
-          Text("Trier par :", style: AppTextStyles.topFeedSectionTextStyle),
-        ],
-      ),
-    ),
+
+    // Child of the container, which is a [shortSection] widget.
+    child: shortSection(context, onTap),
   );
 }
 
-Widget modelsSection(context) {
-  return Container(
-    padding: const EdgeInsets.only(top: 7.0, bottom: 9.0),
-    width: MediaQuery.of(context).size.width / 2.80,
-    height: MediaQuery.of(context).size.height / 21.3,
-    decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10.0),
-        color: AppColors.blackColor2,
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.blackColor.withOpacity(0.3), // Color of the shadow
-            spreadRadius: 1, // Spread radius
-            blurRadius: 2, // Blur radius
-            offset: const Offset(0, 3), // changes position of shadow
-          )
-        ]),
-    child: GestureDetector(
-      onTap: () {},
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Icon(Icons.directions_car, color: AppColors.primaryColor),
-          const SizedBox(width: 15.0),
-          Text("Modèles", style: AppTextStyles.topFeedSectionTextStyle),
+Widget shortSection(BuildContext context, Function()? onTap) {
+  return InkWell(
+    onTap: () async {
+      String sortChoice = "";
+      await SelectDialog.showModal<String>(
+        context,
+        showSearchBox: false,
+        constraints: BoxConstraints(
+          maxHeight: MediaQuery.of(context).size.height * 0.2,
+          minHeight: MediaQuery.of(context).size.height * 0.2,
+        ),
+        backgroundColor: AppColors.primaryColor,
+        titleStyle: AppTextStyles.heading2,
+        label: "Filtre",
+        items: [
+          "Prix croissant",
+          "Prix décroissant",
+          "Mieux notés",
         ],
-      ),
+        onChange: (String selected) => sortChoice = selected,
+      );
+      switch (sortChoice) {
+        case "Prix croissant":
+          sortByPriceLowToHigh(currentCarList);
+          onTap!();
+          break;
+        case "Prix décroissant":
+          sortByPriceHighToLow(currentCarList);
+          onTap!();
+          break;
+        case "Mieux notés":
+          sortByRating(currentCarList);
+          onTap!();
+          break;
+        default:
+          break;
+      }
+    },
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        const Icon(Icons.filter_list, color: AppColors.primaryColor, size: 50),
+        const SizedBox(width: 65.0),
+        Text("Filtre", style: AppTextStyles.topFeedSectionTextStyle),
+      ],
     ),
   );
 }

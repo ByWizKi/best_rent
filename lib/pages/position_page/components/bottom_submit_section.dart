@@ -7,16 +7,28 @@ import 'package:best_rent/themes/app_colors.dart';
 import 'package:best_rent/themes/app_text_styles.dart';
 import 'package:flutter/material.dart';
 
-Widget bottomSubmitSection(context) {
+/// Widget representing the bottom section of a page, with a submit button.
+///
+/// This widget is used to display a bottom section of a page, with a submit
+/// button. It takes a [BuildContext] as a parameter and returns a
+/// [SizedBox] widget.
+///
+/// The submit button is an [ElevatedButton] with the text 'Je Valide !'.
+/// It checks if the current user's position is not null. If it is not null,
+/// it shows a dialog with a confirmation message. If it is null, it shows a
+/// dialog with an error message.
+Widget bottomSubmitSection(BuildContext context) {
   return SizedBox(
+    // Set the width and height of the SizedBox
     width: MediaQuery.of(context).size.width / 1.6,
     height: 55,
     child: ElevatedButton(
+      // Define the onPressed function
       onPressed: () {
-        // Verify if position is not null
+        // Check if the user's position is null
         if (currentUser.cityName == '') {
+          // If it is null, show an error dialog
           log('Position null');
-          // Show error dialog
           showDialog(
             context: context,
             builder: (context) => alertDialogPositionError(context),
@@ -24,6 +36,7 @@ Widget bottomSubmitSection(context) {
             useSafeArea: true,
           );
         } else {
+          // If it is not null, show a confirmation dialog
           log('Position not null : ${currentUser.cityName}');
           showDialog(
             context: context,
@@ -34,6 +47,7 @@ Widget bottomSubmitSection(context) {
         }
       },
       style: ElevatedButton.styleFrom(
+        // Set the button's style properties
         backgroundColor: AppColors.blackColor2,
         surfaceTintColor: AppColors.blackColor2,
         elevation: 20,
@@ -42,6 +56,7 @@ Widget bottomSubmitSection(context) {
         ),
       ),
       child: Text(
+        // Set the text of the button
         'Je Valide !',
         style: AppTextStyles.buttonStyle,
       ),

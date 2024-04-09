@@ -71,7 +71,7 @@ class Car {
       price: json['pricing_info']['price'],
       seats: int.tryParse(json['vehicle_info']['seats']),
       doors: int.tryParse(json['vehicle_info']['doors']),
-      isAutomatic: json['vehicle_info']['transmission'] == 'automatique',
+      isAutomatic: json['vehicle_info']['transmission'] == 'Automatique',
       baggage: int.tryParse(json['vehicle_info']['suitcases']['small']),
       nameSupplier: json['supplier_info']['name'],
       adresseSupplier: json['supplier_info']['address'],
