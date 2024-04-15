@@ -14,11 +14,7 @@ Widget alertDialogConfirmDates(BuildContext context) {
     alignment: Alignment.center,
     surfaceTintColor: AppColors.whiteColor,
     title: Text(
-<<<<<<< Updated upstream
-      'Vous validez ${DateFormat('dd-MM-yyyy HH:mm').format(currentUser.datePickUp)} et ${DateFormat('dd-MM-yyyy HH:mm').format(currentUser.dateDropOff)} comme dates de location ?',
-=======
       'Vous validez ${DateFormat('dd-MM-yyyy HH:mm').format(currentUser.datePickUp)} et ${DateFormat('dd-MM-yyyy HH:mm').format(currentUser.dateDropOff)} comme dates ?',
->>>>>>> Stashed changes
       textAlign: TextAlign.center,
       style: AppTextStyles.titleAlertDialog,
     ),
