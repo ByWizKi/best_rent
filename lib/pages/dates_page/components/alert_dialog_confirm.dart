@@ -14,36 +14,42 @@ Widget alertDialogConfirmDates(BuildContext context) {
     alignment: Alignment.center,
     surfaceTintColor: AppColors.whiteColor,
     title: Text(
+<<<<<<< Updated upstream
       'Vous validez ${DateFormat('dd-MM-yyyy HH:mm').format(currentUser.datePickUp)} et ${DateFormat('dd-MM-yyyy HH:mm').format(currentUser.dateDropOff)} comme dates de location ?',
+=======
+      'Vous validez ${DateFormat('dd-MM-yyyy HH:mm').format(currentUser.datePickUp)} et ${DateFormat('dd-MM-yyyy HH:mm').format(currentUser.dateDropOff)} comme dates ?',
+>>>>>>> Stashed changes
       textAlign: TextAlign.center,
       style: AppTextStyles.titleAlertDialog,
     ),
-    actions: [
+    actions: <Widget>[
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
+        children: <Widget>[
           ElevatedButton(
             style: ButtonStyle(
-                fixedSize: const MaterialStatePropertyAll<Size>(Size(90, 40)),
-                backgroundColor:
-                    MaterialStateProperty.all<Color>(AppColors.primaryColor),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20.0),
-                ))),
+              fixedSize: MaterialStateProperty.all<Size>(const Size(90, 40)),
+              backgroundColor:
+                  MaterialStateProperty.all<Color>(AppColors.primaryColor),
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0)),
+              ),
+            ),
             onPressed: () => Navigator.pop(context),
             child: Text('Non', style: AppTextStyles.buttonAlertDialog),
           ),
           const Spacer(),
           ElevatedButton(
             style: ButtonStyle(
-                fixedSize: const MaterialStatePropertyAll<Size>(Size(90, 40)),
-                backgroundColor:
-                    MaterialStateProperty.all<Color>(AppColors.primaryColor),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20.0),
-                ))),
+              fixedSize: MaterialStateProperty.all<Size>(const Size(90, 40)),
+              backgroundColor:
+                  MaterialStateProperty.all<Color>(AppColors.primaryColor),
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0)),
+              ),
+            ),
             onPressed: () async {
               showDialog(
                 context: context,
@@ -52,18 +58,14 @@ Widget alertDialogConfirmDates(BuildContext context) {
                 builder: (BuildContext context) {
                   return const Center(
                     child: CircularProgressIndicator(
-                      color: AppColors.primaryColor,
-                    ), // Loading indicator
-                  );
+                        color: AppColors.primaryColor),
+                  ); // Loading indicator
                 },
               );
               await searchVehicle(currentUser);
               Navigator.pop(context); // Dismiss the loading dialog
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const FeedPage(),
-                  ));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const FeedPage()));
             },
             child: Text('Oui', style: AppTextStyles.buttonAlertDialog),
           ),

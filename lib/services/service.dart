@@ -51,7 +51,6 @@ void sortByModels(List<car.Car> cars, String model) {
   }
   if (model == 'Luxe') model = 'de Luxe';
   cars.map((car) => car.group! == model).toList();
-  print(cars.length);
 }
 
 /// An empty list of [car.Car] objects.

@@ -96,6 +96,7 @@ List<double> _parseLocationData(List<dynamic> data) {
 /// This function does not return any value.
 Future<void> searchVehicle(User user) async {
   try {
+    print('Fetching location data ...');
     // Fetch location data for the user
     List<double> rentalLocations = await fetchRentalLocations(user);
 
@@ -113,69 +114,42 @@ Future<void> searchVehicle(User user) async {
 }
 
 Future<void> _searchForVehicles(List<double> locations, User user) async {
-  /// This function makes a GET request to the Booking.com Car Rental Search API
-  /// with the provided [locations] and [user] data, and handles the search results.
-  ///
-  /// The request is made to the following URL:
-  /// https://booking-com.p.rapidapi.com/v1/car-rental/search
-  ///
-  /// The request includes the following headers:
-  /// - X-RapidAPI-Key: The RapidAPI key from the environment variables.
-  /// - X-RapidAPI-Host: The RapidAPI host from the environment variables.
-  ///
-  /// The request includes the following query parameters:
-  /// - locale: The language locale, set to 'fr'.
-  /// - drop_off_longitude: The longitude of the drop-off location.
-  /// - pick_up_longitude: The longitude of the pick-up location.
-  /// - currency: The currency, set to 'EUR'.
-  /// - pick_up_datetime: The date and time of the pick-up.
-  /// - drop_off_latitude: The latitude of the drop-off location.
-  /// - pick_up_latitude: The latitude of the pick-up location.
-  /// - from_country: The country of origin, set to 'fr'.
-  /// - sort_by: The sorting method, set to 'recommended'.
-  /// - drop_off_datetime: The date and time of the drop-off.
-  ///
-  /// If the response status code is 200, the function calls [_handleSearchResults]
-  /// with the parsed JSON data. If the status code is not 200, it throws an HttpException.
-  Future<void> searchForVehicles(List<double> locations, User user) async {
-    // Define the API endpoint URL
-    const String url =
-        'https://booking-com.p.rapidapi.com/v1/car-rental/search';
+  // Define the API endpoint URL
+  const String url = 'https://booking-com.p.rapidapi.com/v1/car-rental/search';
 
-    // Define the request headers
-    final headers = {
-      'X-RapidAPI-Key': Env.rapidApiKey,
-      'X-RapidAPI-Host': 'booking-com.p.rapidapi.com'
-    };
+  // Define the request headers
+  final headers = {
+    'X-RapidAPI-Key': Env.rapidApiKey,
+    'X-RapidAPI-Host': 'booking-com.p.rapidapi.com'
+  };
 
-    // Define the query parameters
-    final params = {
-      'locale': 'fr',
-      'drop_off_longitude': locations[1].toString(),
-      'pick_up_longitude': locations[1].toString(),
-      'currency': 'EUR',
-      'pick_up_datetime': user.datePickUpString,
-      'drop_off_latitude': locations[0].toString(),
-      'pick_up_latitude': locations[0].toString(),
-      'from_country': 'fr',
-      'sort_by': 'recommended',
-      'drop_off_datetime': user.dateDropOffString
-    };
+  // Define the query parameters
+  final params = {
+    'locale': 'fr',
+    'drop_off_longitude': locations[1].toString(),
+    'pick_up_longitude': locations[1].toString(),
+    'currency': 'EUR',
+    'pick_up_datetime': user.datePickUpString,
+    'drop_off_latitude': locations[0].toString(),
+    'pick_up_latitude': locations[0].toString(),
+    'from_country': 'fr',
+    'sort_by': 'recommended',
+    'drop_off_datetime': user.dateDropOffString
+  };
 
-    // Create the URI with the query parameters
-    final uri = Uri.parse(url).replace(queryParameters: params);
+  // Create the URI with the query parameters
+  final uri = Uri.parse(url).replace(queryParameters: params);
 
-    // Make the GET request to the API
-    final response = await http.get(uri, headers: headers);
+  // Make the GET request to the API
+  final response = await http.get(uri, headers: headers);
 
-    // Handle the response
-    if (response.statusCode == 200) {
-      var data = jsonDecode(response.body) as Map<String, dynamic>;
-      _handleSearchResults(data);
-    } else {
-      throw HttpException(
-          'Failed to fetch vehicles with status: ${response.statusCode}');
-    }
+  // Handle the response
+  if (response.statusCode == 200) {
+    var data = jsonDecode(response.body) as Map<String, dynamic>;
+    _handleSearchResults(data);
+  } else {
+    throw HttpException(
+        'Failed to fetch vehicles with status: ${response.statusCode}');
   }
 }
 
